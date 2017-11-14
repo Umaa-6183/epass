@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Conductor registration</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../css/set1.css">
+  <link rel="stylesheet" href="../css/stylesheet-pure-css.css">
+
+</head>
+<script>
+var vald1,vald2;
+
+function hello(str)
+{
+
+  if (str == "") {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  } else {
+    if (window.XMLHttpRequest) {
+      // code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
+    } else {
+      // code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        document.getElementById("txtHint").innerHTML =  xmlhttp.responseText;
+
+      }
+    }
+
+    xmlhttp.open("GET","../user.php?id=" + str,true);
+    xmlhttp.send();
+
+  }
+
+}
+
+function password()
+{
+
+  var x1 = document.getElementById("pwd1");
+  var x2 = document.getElementById("pwd2");
+  if(x1.value == x2.value)
+  {document.getElementById("msg").innerHTML = "Password match";  return document.getElementById("msg").innerHTML;}
+  else {document.getElementById("msg").innerHTML = "Password mismatch"; return document.getElementById("msg").innerHTML;}
+
+}
+
+function validate()
+{
+  var a = (document.getElementById('txtHint').innerHTML).trim();
+  var b = 'Username is available';
+  var x1 = document.getElementById("pwd1");
+  var x2 = document.getElementById("pwd2");
+  var first= document.getElementById("fname");
+  var mid= document.getElementById("mname");
+  var last= document.getElementById("lname");
+  var pass = document.getElementById("pwd1");
+  var phno = document.getElementById("phno");
+  var em= document.getElementById('email').value;
+  var add= document.getElementById('addr').value;
+  var route= document.getElementById('routeid').value;
+  var newDate = new Date();
+  var presentDate = newDate.getDate();
+  var presentMonth = newDate.getMonth();
+  var presentYear = newDate.getFullYear();
+  var bdate= document.getElementById("bdate").value;
+  var validatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
+  var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  dateValues = bdate.match(validatePattern);
+  var letters = /^[A-Za-z]+$/;
+  var phoneno = /^\d{10}$/;
+  var number= /^[0-9]+$/;
+
+  if (add!="" && routeid.match(number) && x1.value==x2.value && em.match(mailformat) && dateValues!=null && a==b && first.value.match(letters) && mid.value.match(letters) &&
+  last.value.match(letters) && pass.value.length>=8 && phno.value.match(phoneno)){
+
+    var birthYear = dateValues[1];
+    birthMonth = dateValues[3];
+    birthDate=  dateValues[5];
+    if ((birthMonth < 1) || (birthMonth > 12))
+    {
+      alert("Invalid Month")
+      return false;
+    }
+    else if ((birthDate < 1) || (birthDate> 31))
+    {
+      alert("Invalid Date")
+      return false;
+    }
+    else if ((birthMonth==4 || birthMonth==6 || birthMonth==9 || birthMonth==11) && birthDate ==31)
+    {
+      alert("This month does not have 31 days")
+      return false;
+    }
+    else if (birthMonth == 2){
+      var isleap = (birthYear % 4 == 0 && (birthYear % 100 != 0 || birthYear % 400 == 0));
+      if (birthDate> 29 || (birthDate ==29 && !isleap))
+      {
+        alert("February "+birthYear+" did not have more than 28 days")
+        return false;
+      }
+    }
+    else if((birthYear>presentYear))
+    {
+      alert("you cant be from the future!!")
+      return false;
+    }
+    else if((presentYear)-100>birthYear){
+      alert("you cant be that old!!!");
+      return false;
+    }
+
+    else if((birthYear<presentYear) && birthYear>(presentYear)-10){
+      alert("Only 10 years old and above can apply!!")
+      return false;
+    }
+
+    else if(birthYear==(presentYear)-10){
+      if(birthMonth>presentMonth)
+      {
+        alert("you r still not 10")
+        return false;
+      }
+      else if(birthMonth==presentMonth)
+      {
+        if(birthDate>=presentDate+1)
+        {
+          alert("you r still not 10 years old")
+          return false;
+        }
+      }
+    }
+    else if(birthYear==presentYear){
+      alert("Only 10 years old and above can apply!!")
+      return false;
+    }
+    return true;
+  }
+
+  else if(!colg.match(letters)){
+    alert("Enter your Institute name");
+    return false;
+  }
+  else if(x1.value!=x2.value){
+    alert("Password mismatch");
+    return false;
+  }
+  else if(add== ""){
+    alert("Please enter your Address");
+    return false;
+  }
+  else if(!em.match(mailformat)){
+    alert("You have entered invalid email address");
+    return false;
+  }
+
+  else if(dateValues== null){
+    alert("Enter your birth date");
+    return false;
+  }
+
+  else  if(a!=b){
+    alert("username unavailable");
+    return false;
+  }
+  else if(pass.value.length<8){
+    alert("Password must be more than 8 letters");
+    return false;
+  }
+  else if(!phno.value.match(phoneno)){
+    alert("Provide a valid phone number with 10 digits");
+    return false;
+  }
+  else if(!first.value.match(letters) ) {
+    alert('Your name Cannot contain numbers or Special characters');
+    return false;
+  }
+
+  else if(!mid.value.match(letters) ) {
+    alert('Your name Cannot contain numbers or Special characters');
+    return false;
+  }
+  else if(!last.value.match(letters) ) {
+    alert('Your name Cannot contain numbers or Special characters');
+    return false;
+  }
+}
+</script>
+<body data-spy="scroll" data-target=".navbar" data-offset="50" >
+
+
+    <div id="main-wrapper" style="color:white;">
+
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-1 col-xs-1"></div>
+            <div class="col-md-5" style="padding-right:50px; border-right: 2px solid #ee896b;">
+              <form  name="register" action="conductor_registration.php" method="post" onsubmit="return validate();" enctype="multipart/form-data">
+                <span class="input input--hoshi">
+                  <input class="input__field input__field--hoshi" type="text" id="fname" name="fname" />
+                  <label class="input__label input__label--hoshi input__label--hoshi-color-3" for="fname">
+                    <span class="input__label-content input__label-content--hoshi">First Name</span>
+                  </label>
+                </span>
+
+                <span class="input input--hoshi">
+                  <input class="input__field input__field--hoshi" type="text" id="mname" name="mname" />
+                  <label class="input__label input__label--hoshi input__label--hoshi-color-3" for="mname">
+                    <span class="input__label-content input__label-content--hoshi">Middle Name</span>
+                  </label>
+                </span>
+                <span class="input input--hoshi">
+                  <input class="input__field input__field--hoshi" type="text" id="lname" name="lname" />
+                  <label class="input__label input__label--hoshi input__label--hoshi-color-3" for="lname">
+                    <span class="input__label-content input__label-content--hoshi">Last Name</span>
+                  </label>
+                </span>
+
+                <span class="input input--hoshi">
+                  <input class="input__field input__field--hoshi" type="text" id="routeid"  name="rid"/>
+                  <label class="input__label input__label--hoshi input__label--hoshi-color-3" for="colgName">
+                    <span class="input__label-content input__label-content--hoshi">Enter Route ID</span>
+                  </label>
+                </span>
+
+
+                <span class="input input--hoshi">
+                  <input class="input__field input__field--hoshi" type="text" onBlur="hello(this.value)" name="uname" />
+                  <label class="input__label input__label--hoshi input__label--hoshi-color-3" for="uname">
+                    <span class="input__label-content input__label-content--hoshi">User Name</span>
+                  </label>
+
+                </span>
+                <span id="txtHint"></span>
+
+                <span class="input input--hoshi">
+                  <input class="input__field input__field--hoshi" id="pwd1" type="password" name="pass1" />
+                  <label class="input__label input__label--hoshi input__label--hoshi-color-3" for="pass">
+                    <span class="input__label-content input__label-content--hoshi">Enter the Password [min: 8 characters]</span>
+                  </label>
+                </span>
+                <span class="input input--hoshi">
+                  <input class="input__field input__field--hoshi" type="password" id="pwd2" name="pass2" onBlur="password()">
+                  <label class="input__label input__label--hoshi input__label--hoshi-color-3" for="pass1">
+                    <span class="input__label-content input__label-content--hoshi">Re-Enter the Password</span>
+                  </label>
+                </span>
+                <span id="msg"></span>
+                <br>
+                <br>
+
+              </div>
+
+              <div class="col-md-5 col-xs-10" style="padding-left: 25px;">
+                <label for="photoId">Upload Photo-ID Proof:</label>
+                <input class="btn btn-warning" type="file" accept="image/*" name="pic">
+
+
+                <label for="sign">Upload Signature Photo:</label>
+                <input class="btn btn-warning" type="file" accept="image/*" name="sign" required>
+
+
+                <span class="input input--hoshi">
+                  <input class="input__field input__field--hoshi" type="text" id="email" name="email" />
+                  <label class="input__label input__label--hoshi input__label--hoshi-color-3" for="email1">
+                    <span class="input__label-content input__label-content--hoshi">E-mail</span>
+                  </label>
+                </span>
+                <span class="input input--kuro">
+                  <input class="input__field input__field--kuro" type="date" id="bdate" name="dob" />
+                  <label class="input__label input__label--kuro input__label--kuro-color-3" for="bdate">
+                    <span class="input__label-content input__label-content--kuro">Birth Date </span>
+                  </label>
+                </span>
+                <span class="input input--hoshi">
+                  <input class="input__field input__field--hoshi" type="tel" id="phno" name="phno" />
+                  <label class="input__label input__label--hoshi input__label--hoshi-color-3" for="phno">
+                    <span class="input__label-content input__label-content--hoshi">Phone Number</span>
+                  </label>
+                </span>
+
+                <span class="input input--hoshi">
+                  <input class="input__field input__field--hoshi" type="text" name="address" id="addr" />
+                  <label class="input__label input__label--hoshi input__label--hoshi-color-3" for="addr">
+                    <span class="input__label-content input__label-content--hoshi">Address</span>
+                  </label>
+                </span>
+                <br>
+                <div class="container-fluid">
+                  <label style="display:block">Gender:</label>
+                  <input id="radio4" type="radio" name="gender" value="male"  required><label for="radio4"><span><span></span></span>Male</label>
+
+                  <input id="radio5" type="radio" name="gender" value="female" required><label for="radio2"><span><span></span></span>Female</label>
+                </div>
+
+
+              </div>
+              <div class="col-md-1 col-xs-1"></div>
+            </div>
+          </div>
+
+          <div class="col-md-2"></div>
+        </div>
+
+
+      <br>
+      <footer class="container-fluid text-center" style="padding-bottom:2%">
+
+          <input type="submit" class="btn-lg btn-warning" name="submit"  value="Register"></input>
+
+      </footer>
+    </form>
+    <script src="../js/scripts.js"></script>
+    <script src="../js/classie.js"></script>
+    <script>
+    (function() {
+      // trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+      if (!String.prototype.trim) {
+        (function() {
+          // Make sure we trim BOM and NBSP
+          var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+          String.prototype.trim = function() {
+            return this.replace(rtrim, '');
+          };
+        })();
+      }
+
+      [].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+        // in case the input is already filled..
+        if( inputEl.value.trim() !== '' ) {
+          classie.add( inputEl.parentNode, 'input--filled' );
+        }
+
+        // events:
+        inputEl.addEventListener( 'focus', onInputFocus );
+        inputEl.addEventListener( 'blur', onInputBlur );
+      } );
+
+      function onInputFocus( ev ) {
+        classie.add( ev.target.parentNode, 'input--filled' );
+      }
+
+      function onInputBlur( ev ) {
+        if( ev.target.value.trim() === '' ) {
+          classie.remove( ev.target.parentNode, 'input--filled' );
+        }
+      }
+    })();
+    </script>
+    <!--
+    <form action="admin\conductor_registration.php" method="post" enctype="multipart/form-data">
+      first name:<input type="text" name="fname" required><br /><br />
+      middle name:<input type="text" name="mname" required><br /><br />
+      last name:<input type="text" name="lname" required><br /><br />
+      Gender:
+      <input type="radio" value="male" name="gender"><label for="Male">Male</label>
+      <input type="radio" value="female" name="gender" required><label for="Female">Female</label><br/><br/>
+      email id:<input type="email" name="email" required><br /><br />
+      date of birth:<input type="date" name="dob" required><br /><br />
+      phone number:<input type="text" name="phno" required><br /><br />
+      address:<input type="textarea" name="address" required><br /><br />
+      username:<input type="text" name="uname" required><br /><br />
+      password:<input type="text" name="pass1" required><br /><br />
+      re-enter password:<input type="text" name="pass2" required><br /><br />
+      photo:<input type="file" name="pic" id="pic" required><br /><br />
+      signature:<input type="file" name="sign" required><br /><br />
+      Route ID:<input type="text" name="rid" required><br/><br/>
+      <input type="submit" name="submit">
+    </form>
+  -->
+  </div>
+</body>
+</html>

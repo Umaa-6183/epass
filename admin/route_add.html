@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<?php require_once "connection.php";
+session_start;
+?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<script type="text/javascript">
+
+$(document).ready(function(){
+  $("#route").click(function(){
+    $("#form").slideToggle("fast")
+    $("#result").slideUp("fast")
+
+  });
+
+  $("#search").click(function(){
+    $("#result").slideToggle("fast")
+    $("#form").slideUp("fast")
+
+  })
+
+
+})
+
+
+
+
+</script>
+<style>
+#form,#result{
+  display:none;
+}
+div{
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div id="route" class="container-fluid">
+<h3 class=""> ADD NEW ROUTE</h3>
+</div>
+<div id="form" class="container-fluid">
+<form  action="route_add.php" method="post" name="insert_route" enctype="multipart/form-data" class="container-fluid" >
+
+Start Point:    <input name="start" required type="text" maxlength="50" /><br />
+End Point:     <input name="end" required type="text" maxlength="50" /><br />
+Distance:         <input name="distance" required type="text" maxlength="50" /><br />
+Rate:   <input name="rate" required type="number" maxlength="50" /><br />
+
+
+ <p align="center">  <input name="add_route" type="submit" value="add_route"  class="btn btn-primary"    />
+                  <input name="reset" type="reset" value="reset" class="btn btn-primary" />
+
+
+                  </p>
+
+
+
+
+
+
+</form>
+</div>
+<div id="search" class="container-fluid">
+<h3> Search for Routes<h3>
+</div>
+
+<div id="result" class="container-fluid">
+<form method="post" action="route_search.php" class="container-fluid">
+<input name="station" required type="text" maxlength="50" /><br />
+  <input type="submit" name="Search" value="Search" class="btn btn-primary" >
+</form>
+
+
+
+</div>
+
+
+</body>
+</html>
